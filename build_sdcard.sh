@@ -667,7 +667,7 @@ echo "*** HARDENING ***"
 # based on https://stadicus.github.io/RaspiBolt/raspibolt_21_security.html
 
 # fail2ban (no config required)
-sudo apt-get install -y --no-install-recommends python3-systemd fail2ban
+#### sudo apt-get install -y --no-install-recommends python3-systemd fail2ban
 
 if [ "${baseImage}" = "raspbian" ]; then
   echo ""
@@ -707,37 +707,37 @@ echo ""
 
 # *** RASPIBLITZ LCD DRIVER (do last - because makes a reboot) ***
 # based on https://www.elegoo.com/tutorial/Elegoo%203.5%20inch%20Touch%20Screen%20User%20Manual%20V1.00.2017.10.09.zip
-echo "*** LCD DRIVER ***"
-
-echo "--> Downloading LCD Driver from Github"
-cd /home/admin/
-sudo -u admin git clone https://github.com/goodtft/LCD-show.git
-sudo -u admin chmod -R 755 LCD-show
-sudo -u admin chown -R admin:admin LCD-show
-cd LCD-show/
+#echo "*** LCD DRIVER ***"
+#
+#echo "--> Downloading LCD Driver from Github"
+#cd /home/admin/
+#sudo -u admin git clone https://github.com/goodtft/LCD-show.git
+#sudo -u admin chmod -R 755 LCD-show
+#sudo -u admin chown -R admin:admin LCD-show
+#cd LCD-show/
 # set comit hard to old version - that seemed to run better
 #
-sudo -u admin git reset --hard ce52014
+#sudo -u admin git reset --hard ce52014
 
 # install xinput calibrator package
-  echo "--> install xinput calibrator package"
-sudo dpkg -i xinput-calibrator_0.7.5-1_armhf.deb
+#  echo "--> install xinput calibrator package"
+#sudo dpkg -i xinput-calibrator_0.7.5-1_armhf.deb
 
 # make dietpi preparations
-if [ "${baseImage}" = "dietpi" ]; then
-  echo "--> dietpi preparations"
-  sudo rm -rf /etc/X11/xorg.conf.d/40-libinput.conf
-  sudo mkdir /etc/X11/xorg.conf.d
-  sudo cp ./usr/tft35a-overlay.dtb /boot/overlays/
-  sudo cp ./usr/tft35a-overlay.dtb /boot/overlays/tft35a.dtbo
-  sudo cp -rf ./usr/99-calibration.conf-35  /etc/X11/xorg.conf.d/99-calibration.conf
-  sudo cp -rf ./usr/99-fbturbo.conf  /usr/share/X11/xorg.conf.d/
-  sudo cp ./usr/cmdline.txt /DietPi/
-  sudo cp ./usr/inittab /etc/
-  sudo cp ./boot/config-35.txt /DietPi/config.txt
+#if [ "${baseImage}" = "dietpi" ]; then
+#  echo "--> dietpi preparations"
+#  sudo rm -rf /etc/X11/xorg.conf.d/40-libinput.conf
+#  sudo mkdir /etc/X11/xorg.conf.d
+#  sudo cp ./usr/tft35a-overlay.dtb /boot/overlays/
+#  sudo cp ./usr/tft35a-overlay.dtb /boot/overlays/tft35a.dtbo
+#  sudo cp -rf ./usr/99-calibration.conf-35  /etc/X11/xorg.conf.d/99-calibration.conf
+#  sudo cp -rf ./usr/99-fbturbo.conf  /usr/share/X11/xorg.conf.d/
+#  sudo cp ./usr/cmdline.txt /DietPi/
+#  sudo cp ./usr/inittab /etc/
+#  sudo cp ./boot/config-35.txt /DietPi/config.txt
   # make LCD screen rotation correct
-  sudo sed -i "s/dtoverlay=tft35a/dtoverlay=tft35a:rotate=270/" /DietPi/config.txt
-fi
+#  sudo sed -i "s/dtoverlay=tft35a/dtoverlay=tft35a:rotate=270/" /DietPi/config.txt
+# fi
 
 # *** RASPIBLITZ IMAGE READY ***
 echo ""
@@ -759,9 +759,9 @@ echo ""
 
 # activate LCD and trigger reboot
 # dont do this on dietpi to allow for automatic build
-if [ "${baseImage}" != "dietpi" ]; then
-  sudo chmod +x -R /home/admin/LCD-show
-  cd /home/admin/LCD-show/
-  sudo apt-mark hold raspberrypi-bootloader
-  sudo ./LCD35-show
-fi
+#if [ "${baseImage}" != "dietpi" ]; then
+#  sudo chmod +x -R /home/admin/LCD-show
+#  cd /home/admin/LCD-show/
+#  sudo apt-mark hold raspberrypi-bootloader
+#  sudo ./LCD35-show
+#fi
